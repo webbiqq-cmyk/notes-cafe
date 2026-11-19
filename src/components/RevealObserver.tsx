@@ -28,7 +28,16 @@ export function RevealObserver() {
       },
       { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
     );
-    elements.forEach((el) => observer.observe(el));
+    elements.forEach((el) => {
+      // Reveal anything already on screen immediately rather than waiting
+      // for the observer's first callback.
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add("is-in");
+      } else {
+        observer.observe(el);
+      }
+    });
     return () => observer.disconnect();
   }, [pathname]);
 

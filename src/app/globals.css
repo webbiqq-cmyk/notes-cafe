@@ -1695,14 +1695,19 @@ button {
     transform: none;
   }
 
+  /* The wrapper stays unclipped so IntersectionObserver can see it;
+     only the image inside is wiped in. */
   [data-reveal="clip"] {
     opacity: 1;
     transform: none;
+  }
+
+  [data-reveal="clip"] > img {
     clip-path: inset(100% 0 0 0);
     transition: clip-path 1.2s var(--ease);
   }
 
-  [data-reveal="clip"].is-in {
+  [data-reveal="clip"].is-in > img {
     clip-path: inset(0 0 0 0);
   }
 
